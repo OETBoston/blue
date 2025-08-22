@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Bikes @ Boston City Hall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Inter, -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: #f0f4f7;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+            /* Added to allow footer to sit below the main container */
+            flex-direction: column; 
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        header div {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            max-width: 250px;
+            height: 28px;
+        }
+
+        .city-hall-icon {
+            width: 55px;
+            height: 55px;
+        }
+
+        .header-title {
+            font-size: 31px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .station {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .station:hover {
+            transform: translateY(-5px);
+        }
+
+        .station h2 {
+            font-size: 1.8rem; /* Adjusted font size for longer names */
+            text-align: center;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: #1e428a; /* Bluebikes Blue */
+            min-height: 3.5rem; /* Reserve space to prevent layout shifts */
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat .count {
+            display: block;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .stat .label {
+            font-size: 1.2rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+        
+        .electricity-icon {
+            width: 1em;
+            height: 1em;
+            fill: #ffd301;
+        }
+
+        .last-updated {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 1rem;
+        }
+
+        .refresh-countdown {
+            font-style: italic;
+            color: #999;
+        }
+
+        /* NEW: Footer styles */
+        footer {
+            width: 100%;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .footer-logo {
+            margin-top: 30px;
+            width: 120px;
+            height: auto;
+        }
+        .footer-logo:hover {
+            opacity: 1;
+        }
+
+        /* Responsive layout for larger screens */
+        @media (min-width: 768px) {
+            main {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+            .station {
+                flex: 1;
+                max-width: 48%;
+            }
+            .station h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div>
+                <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="logo">
+                <h1 class="header-title">@ Boston City Hall</h1>
+                <svg class="city-hall-icon" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><path d="m51.96 83.7h22.67v36.4h-22.67z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m39.27 65.48h65.4v20.82h-65.4z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.76 64.11h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m102.77 64.09h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m13.06 23.87h117.87v20.82h-117.87z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.98 44.69h87.99v20.82h-87.99z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><g fill="#0f1f2d"><path d="m21.11 30.23h8.1v8.1h-8.1z"/><path d="m34.5 30.23h8.1v8.1h-8.1z"/><path d="m47.86 30.23h8.1v8.1h-8.1z"/><path d="m61.24 30.23h8.1v8.1h-8.1z"/><path d="m74.63 30.23h8.1v8.1h-8.1z"/><path d="m101.37 30.23h8.1v8.1h-8.1z"/><path d="m88.02 30.23h8.1v8.1h-8.1z"/><path d="m114.76 30.23h8.1v8.1h-8.1z"/><path d="m34.5 50.35h8.1v8.1h-8.1z"/><path d="m47.86 50.35h8.1v8.1h-8.1z"/><path d="m61.24 50.35h8.1v8.1h-8.1z"/><path d="m74.63 50.35h8.1v8.1h-8.1z"/><path d="m88.02 50.35h8.1v8.1h-8.1z"/><path d="m101.37 50.35h8.1v8.1h-8.1z"/><path d="m61.24 71.84h8.1v8.1h-8.1z"/><path d="m74.63 71.84h8.1v8.1h-8.1z"/><path d="m74.58 71.84h8.1v8.1h-8.1z"/><path d="m87.96 71.84h8.1v8.1h-8.1z"/><path d="m47.91 71.84h8.1v8.1h-8.1z"/></g><path d="m41.53 106.58h46.46v13.52h-46.46z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/></svg>
+            </div>
+        </header>
+        
+        <main id="station-container">
+            <div class="station" id="B32008">
+                <h2>Loading...</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="count" id="classic-B32008">--</span>
+                        <span class="label">Classic</span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="ebikes-B32008">--</span>
+                        <span class="label">
+                            <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                            Ebikes
+                        </span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="docks-B32008">--</span>
+                        <span class="label">Docks</span>
+                    </div>
+                </div>
+                <div class="last-updated">
+                    <span class="refresh-countdown" id="refresh-B32008"></span>
+                    <span>Last updated: <span id="last-updated-B32008">Never</span></span>
+                </div>
+            </div>
+
+            <div class="station" id="D32009">
+                <h2>Loading...</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="count" id="classic-D32009">--</span>
+                        <span class="label">Classic</span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="ebikes-D32009">--</span>
+                        <span class="label">
+                             <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                            Ebikes
+                        </span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="docks-D32009">--</span>
+                        <span class="label">Docks</span>
+                    </div>
+                </div>
+                <div class="last-updated">
+                    <span class="refresh-countdown" id="refresh-D32009"></span>
+                    <span>Last updated: <span id="last-updated-D32009">Never</span></span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- NEW: Footer with logo -->
+    <footer>
+        <img src="https://assets.boston.gov/icons/dept_icons/boston_bikes_icon.svg" alt="Boston Bikes Logo" class="footer-logo">
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const stationShortNames = ['B32008', 'D32009'];
+            const stationDataCache = {}; 
+            
+            const REFRESH_INTERVAL_SECONDS = 20;
+            let countdownInterval;
+
+            function startCountdown() {
+                if (countdownInterval) clearInterval(countdownInterval);
+
+                let secondsRemaining = REFRESH_INTERVAL_SECONDS;
+                const countdownElements = document.querySelectorAll('.refresh-countdown');
+
+                const updateTimer = () => {
+                    if (secondsRemaining > 0) {
+                        const displaySeconds = Math.ceil(secondsRemaining / 5) * 5;
+                        countdownElements.forEach(el => el.textContent = `Refreshing in ${displaySeconds}s...`);
+                        secondsRemaining--;
+                    } else {
+                        countdownElements.forEach(el => el.textContent = `Refreshing...`);
+                        clearInterval(countdownInterval);
+                    }
+                };
+                
+                updateTimer(); 
+                countdownInterval = setInterval(updateTimer, 1000);
+            }
+
+            async function fetchAndDisplayData() {
+                try {
+                    const gbfsResponse = await fetch('https://gbfs.bluebikes.com/gbfs/gbfs.json');
+                    if (!gbfsResponse.ok) throw new Error(`GBFS discovery file not found.`);
+                    const gbfsData = await gbfsResponse.json();
+                    
+                    const stationInfoURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_information').url;
+                    const statusURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_status').url;
+
+                    if (Object.keys(stationDataCache).length === 0) {
+                        const infoResponse = await fetch(stationInfoURL);
+                        if (!infoResponse.ok) throw new Error(`Station info not found.`);
+                        const infoData = await infoResponse.json();
+                        
+                        infoData.data.stations.forEach(station => {
+                            if (stationShortNames.includes(station.short_name)) {
+                                stationDataCache[station.short_name] = {
+                                    id: station.station_id,
+                                    name: station.name
+                                };
+                            }
+                        });
+                    }
+
+                    const statusResponse = await fetch(statusURL);
+                    if (!statusResponse.ok) throw new Error(`Station status not found.`);
+                    const statusData = await statusResponse.json();
+                    
+                    const lastUpdatedTime = new Date(statusData.last_updated * 1000).toLocaleTimeString([], { 
+                        hour: 'numeric', 
+                        minute: '2-digit' 
+                    });
+
+                    statusData.data.stations.forEach(station => {
+                        const shortName = Object.keys(stationDataCache).find(key => stationDataCache[key].id === station.station_id);
+                        if (shortName) {
+                            const stationName = stationDataCache[shortName].name;
+                            const ebikes = station.num_ebikes_available || 0;
+                            const classicBikes = (station.num_bikes_available || 0) - ebikes;
+                            const docks = station.num_docks_available || 0;
+
+                            document.getElementById(shortName).querySelector('h2').textContent = stationName;
+                            document.getElementById(`classic-${shortName}`).textContent = classicBikes;
+                            document.getElementById(`ebikes-${shortName}`).textContent = ebikes;
+                            document.getElementById(`docks-${shortName}`).textContent = docks;
+                            document.getElementById(`last-updated-${shortName}`).textContent = lastUpdatedTime;
+                        }
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching Bluebikes data:', error);
+                    stationShortNames.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.querySelector('h2').textContent = `Could not load data`;
+                    });
+                }
+            }
+            
+            fetchAndDisplayData();
+            startCountdown();
+            
+            setInterval(() => {
+                fetchAndDisplayData();
+                startCountdown();
+            }, REFRESH_INTERVAL_SECONDS * 1000);
+        });
+    </script>
+
+</body>
+</html>
