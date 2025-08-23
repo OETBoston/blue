@@ -19,7 +19,6 @@
             margin: 0;
             padding: 1rem;
             box-sizing: border-box;
-            /* Added to allow footer to sit below the main container */
             flex-direction: column; 
         }
 
@@ -88,13 +87,13 @@
         }
 
         .station h2 {
-            font-size: 1.8rem; /* Adjusted font size for longer names */
+            font-size: 1.8rem;
             text-align: center;
             font-weight: 600;
             margin-top: 0;
             margin-bottom: 1.5rem;
             color: #1e428a; /* Bluebikes Blue */
-            min-height: 3.5rem; /* Reserve space to prevent layout shifts */
+            min-height: 3.5rem;
         }
 
         .stats {
@@ -126,13 +125,15 @@
             fill: #ffd301;
         }
 
-        .last-updated {
+        .status-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.9rem;
             color: #777;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
         }
 
         .refresh-countdown {
@@ -140,7 +141,6 @@
             color: #999;
         }
 
-        /* NEW: Footer styles */
         footer {
             width: 100%;
             text-align: center;
@@ -156,18 +156,49 @@
             opacity: 1;
         }
 
-        /* Responsive layout for larger screens */
         @media (min-width: 768px) {
             main {
                 flex-direction: row;
                 justify-content: space-around;
+                flex-wrap: wrap;
             }
             .station {
                 flex: 1;
-                max-width: 48%;
+                min-width: 300px;
+                max-width: 31%; 
             }
             .station h2 {
                 font-size: 2rem;
+            }
+        }
+
+        /* NEW: Media query for smaller screens (iPhones) */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .header-title {
+                font-size: 22px; /* Smaller header title */
+            }
+            .logo {
+                max-width: 180px; /* Smaller logo */
+            }
+
+            .station h2 {
+                font-size: 1.4rem; /* Smaller station names */
+                min-height: 3rem;
+            }
+            .stat .count {
+                font-size: 2.8rem; /* Smaller count numbers */
+            }
+            .stat .label {
+                font-size: 1rem; /* Smaller labels */
+            }
+            .station {
+                padding: 1rem 1.2rem; /* Reduce padding inside cards */
             }
         }
     </style>
@@ -203,10 +234,6 @@
                         <span class="label">Docks</span>
                     </div>
                 </div>
-                <div class="last-updated">
-                    <span class="refresh-countdown" id="refresh-B32008"></span>
-                    <span>Last updated: <span id="last-updated-B32008">Never</span></span>
-                </div>
             </div>
 
             <div class="station" id="D32009">
@@ -228,40 +255,63 @@
                         <span class="label">Docks</span>
                     </div>
                 </div>
-                <div class="last-updated">
-                    <span class="refresh-countdown" id="refresh-D32009"></span>
-                    <span>Last updated: <span id="last-updated-D32009">Never</span></span>
+            </div>
+            
+            <div class="station" id="B32032">
+                <h2>Loading...</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <span class="count" id="classic-B32032">--</span>
+                        <span class="label">Classic</span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="ebikes-B32032">--</span>
+                        <span class="label">
+                             <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                            Ebikes
+                        </span>
+                    </div>
+                    <div class="stat">
+                        <span class="count" id="docks-B32032">--</span>
+                        <span class="label">Docks</span>
+                    </div>
                 </div>
             </div>
         </main>
+
+        <div class="status-footer">
+            <span class="refresh-countdown" id="global-refresh-countdown"></span>
+            <span id="global-last-updated">Last updated: <span>Never</span></span>
+        </div>
     </div>
 
-    <!-- NEW: Footer with logo -->
     <footer>
         <img src="https://assets.boston.gov/icons/dept_icons/boston_bikes_icon.svg" alt="Boston Bikes Logo" class="footer-logo">
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const stationShortNames = ['B32008', 'D32009'];
+            const stationShortNames = ['B32008', 'D32009', 'B32032'];
             const stationDataCache = {}; 
             
             const REFRESH_INTERVAL_SECONDS = 20;
             let countdownInterval;
 
+            const globalCountdownEl = document.getElementById('global-refresh-countdown');
+            const globalLastUpdatedEl = document.querySelector('#global-last-updated span');
+
             function startCountdown() {
                 if (countdownInterval) clearInterval(countdownInterval);
 
                 let secondsRemaining = REFRESH_INTERVAL_SECONDS;
-                const countdownElements = document.querySelectorAll('.refresh-countdown');
 
                 const updateTimer = () => {
                     if (secondsRemaining > 0) {
                         const displaySeconds = Math.ceil(secondsRemaining / 5) * 5;
-                        countdownElements.forEach(el => el.textContent = `Refreshing in ${displaySeconds}s...`);
+                        globalCountdownEl.textContent = `Refreshing in ${displaySeconds}s...`;
                         secondsRemaining--;
                     } else {
-                        countdownElements.forEach(el => el.textContent = `Refreshing...`);
+                        globalCountdownEl.textContent = `Refreshing...`;
                         clearInterval(countdownInterval);
                     }
                 };
@@ -303,6 +353,8 @@
                         minute: '2-digit' 
                     });
 
+                    globalLastUpdatedEl.textContent = lastUpdatedTime;
+
                     statusData.data.stations.forEach(station => {
                         const shortName = Object.keys(stationDataCache).find(key => stationDataCache[key].id === station.station_id);
                         if (shortName) {
@@ -315,7 +367,6 @@
                             document.getElementById(`classic-${shortName}`).textContent = classicBikes;
                             document.getElementById(`ebikes-${shortName}`).textContent = ebikes;
                             document.getElementById(`docks-${shortName}`).textContent = docks;
-                            document.getElementById(`last-updated-${shortName}`).textContent = lastUpdatedTime;
                         }
                     });
 
