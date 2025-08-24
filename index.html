@@ -3,308 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Bikes @ Boston City Hall</title>
+    <link rel="icon" href="bb.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="bb.svg">
+    <title>Blue Bikes Nearby</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display-swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
+        /* Define the Inter font family for Tailwind to use */
         body {
             font-family: Inter, -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: #f0f4f7;
             color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-            flex-direction: column; 
         }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 2rem;
+        h2 {
+            color: #162F77;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        header div {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            max-width: 250px;
-            height: 28px;
-        }
-
-        .city-hall-icon {
-            width: 55px;
-            height: 55px;
-        }
-
-        .header-title {
-            font-size: 31px;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .station {
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 1.5rem 2rem;
-            transition: transform 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .station:hover {
-            transform: translateY(-5px);
-        }
-
-        .station h2 {
-            font-size: 1.8rem;
-            text-align: center;
-            font-weight: 600;
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            color: #1e428a; /* Bluebikes Blue */
-            min-height: 3.5rem;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat .count {
-            display: block;
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-        }
-
-        .stat .label {
-            font-size: 1.2rem;
-            color: #555;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.3rem;
+        /* Custom scrollbar styles for the dropdown */
+        .dropdown-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
         }
         
-        .electricity-icon {
-            width: 1em;
-            height: 1em;
-            fill: #ffd301;
+        .dropdown-scroll::-webkit-scrollbar {
+            width: 6px;
         }
-
-        .status-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-            color: #777;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #eee;
+        
+        .dropdown-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 3px;
         }
-
-        .refresh-countdown {
-            font-style: italic;
-            color: #999;
+        
+        .dropdown-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
         }
-
-        footer {
-            width: 100%;
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .footer-logo {
-            margin-top: 30px;
-            width: 120px;
-            height: auto;
-        }
-        .footer-logo:hover {
-            opacity: 1;
-        }
-
-        @media (min-width: 768px) {
-            main {
-                flex-direction: row;
-                justify-content: space-around;
-                flex-wrap: wrap;
-            }
-            .station {
-                flex: 1;
-                min-width: 300px;
-                max-width: 31%; 
-            }
-            .station h2 {
-                font-size: 2rem;
-            }
-        }
-
-        /* NEW: Media query for smaller screens (iPhones) */
-        @media (max-width: 480px) {
-            body {
-                padding: 0.5rem;
-            }
-            .container {
-                padding: 1rem;
-            }
-            .header-title {
-                font-size: 22px; /* Smaller header title */
-            }
-            .logo {
-                max-width: 180px; /* Smaller logo */
-            }
-
-            .station h2 {
-                font-size: 1.4rem; /* Smaller station names */
-                min-height: 3rem;
-            }
-            .stat .count {
-                font-size: 2.8rem; /* Smaller count numbers */
-            }
-            .stat .label {
-                font-size: 1rem; /* Smaller labels */
-            }
-            .station {
-                padding: 1rem 1.2rem; /* Reduce padding inside cards */
-            }
+        
+        .dropdown-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body>
-
-    <div class="container">
-        <header>
-            <div>
-                <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="logo">
-                <h1 class="header-title">@ Boston City Hall</h1>
-                <svg class="city-hall-icon" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><path d="m51.96 83.7h22.67v36.4h-22.67z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m39.27 65.48h65.4v20.82h-65.4z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.76 64.11h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m102.77 64.09h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m13.06 23.87h117.87v20.82h-117.87z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.98 44.69h87.99v20.82h-87.99z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><g fill="#0f1f2d"><path d="m21.11 30.23h8.1v8.1h-8.1z"/><path d="m34.5 30.23h8.1v8.1h-8.1z"/><path d="m47.86 30.23h8.1v8.1h-8.1z"/><path d="m61.24 30.23h8.1v8.1h-8.1z"/><path d="m74.63 30.23h8.1v8.1h-8.1z"/><path d="m101.37 30.23h8.1v8.1h-8.1z"/><path d="m88.02 30.23h8.1v8.1h-8.1z"/><path d="m114.76 30.23h8.1v8.1h-8.1z"/><path d="m34.5 50.35h8.1v8.1h-8.1z"/><path d="m47.86 50.35h8.1v8.1h-8.1z"/><path d="m61.24 50.35h8.1v8.1h-8.1z"/><path d="m74.63 50.35h8.1v8.1h-8.1z"/><path d="m88.02 50.35h8.1v8.1h-8.1z"/><path d="m101.37 50.35h8.1v8.1h-8.1z"/><path d="m61.24 71.84h8.1v8.1h-8.1z"/><path d="m74.63 71.84h8.1v8.1h-8.1z"/><path d="m74.58 71.84h8.1v8.1h-8.1z"/><path d="m87.96 71.84h8.1v8.1h-8.1z"/><path d="m47.91 71.84h8.1v8.1h-8.1z"/></g><path d="m41.53 106.58h46.46v13.52h-46.46z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/></svg>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen p-4">
+    <div class="container w-full max-w-5xl bg-white rounded-xl shadow-lg p-6 sm:p-8 my-8">
+        <!-- Header Section -->
+        <header class="text-center pb-6 mb-6 border-b border-gray-200">
+            <div class="flex justify-center items-center gap-2 sm:gap-4" style="gap: 7px;">
+                <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="h-7 sm:h-8">
+                <p class="text-2xl sm:text-3xl font-medium">@</p>
+                <!-- Dropdown Menu for Locations -->
+                <div class="relative" id="location-menu">
+                    <button id="location-button" class="text-2xl sm:text-3xl font-semibold text-gray-800 flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <span id="location-name-display"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div style="margin-top:3px;" id="location-dropdown" class="hidden absolute z-10 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-96 overflow-hidden" role="menu">
+                        <!-- Search Input -->
+                        <div class="p-3 border-b border-gray-200">
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="station-search" 
+                                    placeholder="Search stations..." 
+                                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                >
+                                <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <!-- Dropdown Options Container -->
+                        <div class="overflow-y-auto dropdown-scroll" style="max-height: 300px;">
+                            <!-- Preset Locations Section -->
+                            <div id="preset-locations-section">
+                                <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
+                                    Destinations
+                                </div>
+                                <div id="location-options">
+                                    <!-- Preset location options will be injected here by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- Search Results Section -->
+                            <div id="search-results-section" class="hidden">
+                                <div class="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide bg-gray-50">
+                                    Search Results
+                                </div>
+                                <div id="search-results">
+                                    <!-- Search results will be injected here by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- No Results Message -->
+                            <div id="no-results" class="hidden px-4 py-8 text-center text-gray-500 text-sm">
+                                No stations found matching your search.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
         
-        <main id="station-container">
-            <div class="station" id="B32008">
-                <h2>Loading...</h2>
-                <div class="stats">
-                    <div class="stat">
-                        <span class="count" id="classic-B32008">--</span>
-                        <span class="label">Classic</span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="ebikes-B32008">--</span>
-                        <span class="label">
-                            <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
-                            Ebikes
-                        </span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="docks-B32008">--</span>
-                        <span class="label">Docks</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="station" id="D32009">
-                <h2>Loading...</h2>
-                <div class="stats">
-                    <div class="stat">
-                        <span class="count" id="classic-D32009">--</span>
-                        <span class="label">Classic</span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="ebikes-D32009">--</span>
-                        <span class="label">
-                             <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
-                            Ebikes
-                        </span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="docks-D32009">--</span>
-                        <span class="label">Docks</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="station" id="B32032">
-                <h2>Loading...</h2>
-                <div class="stats">
-                    <div class="stat">
-                        <span class="count" id="classic-B32032">--</span>
-                        <span class="label">Classic</span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="ebikes-B32032">--</span>
-                        <span class="label">
-                             <svg class="electricity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
-                            Ebikes
-                        </span>
-                    </div>
-                    <div class="stat">
-                        <span class="count" id="docks-B32032">--</span>
-                        <span class="label">Docks</span>
-                    </div>
-                </div>
-            </div>
+        <!-- Main Content for Station Cards -->
+        <main id="station-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Station cards will be injected here by JavaScript -->
         </main>
-
-        <div class="status-footer">
-            <span class="refresh-countdown" id="global-refresh-countdown"></span>
-            <span id="global-last-updated">Last updated: <span>Never</span></span>
+        <!-- Status Footer -->
+        <div class="status-footer mt-6 pt-6 border-t border-gray-200 flex justify-between items-center text-sm text-gray-600">
+            <span class="refresh-countdown italic text-gray-500" id="global-refresh-countdown"></span>
+            <span id="global-last-updated"><span class="font-semibold">Last updated</span> at <span id="time" class="font-medium">--</span></span>
         </div>
     </div>
-
-    <footer>
-        <img src="https://assets.boston.gov/icons/dept_icons/boston_bikes_icon.svg" alt="Boston Bikes Logo" class="footer-logo">
+    <!-- External Logo Footer -->
+    <footer class="text-center py-4">
+        <a href="https://www.boston.gov/transportation/boston-bikes" target="_blank" rel="noopener noreferrer">
+             <!-- LOGO SIZE INCREASED HERE -->
+             <img src="https://assets.boston.gov/icons/dept_icons/boston_bikes_icon.svg" alt="Boston Bikes Logo" class="h-16 mx-auto">
+        </a>
     </footer>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const stationShortNames = ['B32008', 'D32009', 'B32032'];
-            const stationDataCache = {}; 
+            // --- DATA & STATE ---
+            const locations = [
+                { name: "Boston City Hall", stationIds: ['B32008', 'D32009', 'B32032'] },
+                { name: "1010 Massachusetts Ave.", stationIds: ['C32022'] },
+                { name: "BPS/Bolling Building", stationIds: ['B32017'] },
+                { name: "Cambridge City Hall", stationIds: ['M32012', 'M32011'] },
+                { name: "BCYF/Tobin Community Center", stationIds: ['B32063', 'C32001'] },
+                { name: "Boston Public Library Central", stationIds: ['B32005', 'D32055', 'D32045', 'D32046', 'D32047']},
+                { name: "BPD Headquarters", stationIds: ['B32002', 'B32064', 'B32059']},
+                { name: "Frontage Road", stationIds: ['C32061','C32035']},
+                { name: "12 Channel St", stationIds: ['C32021','C32020', 'C32011']},
+                { name: "Boston Water and Sewer", stationIds: ['C32005', 'C32068', 'C32072', 'B32026'] },
+                { name: "BFD Headquarters", stationIds: ['C32068', 'C32022'] },
+                { name: "Brookline Town Hall", stationIds:['K32003','K32005']},
+                { name: "Somerville City Hall", stationIds:['S32001','S32048', 'S32046']},
+                { name: "Chelsea City Hall", stationIds:['H32002','H320010']},
+                { name: "Fenway Park", stationIds: ['B32058', 'B32020', 'B32034'] }
+            ];
             
+            let currentStationIds = [];
+            let allStations = []; // Will store all available stations for search
+            const stationDataCache = {};
             const REFRESH_INTERVAL_SECONDS = 20;
             let countdownInterval;
-
+            
+            // --- DOM ELEMENTS ---
+            const stationContainer = document.getElementById('station-container');
+            const locationButton = document.getElementById('location-button');
+            const locationNameDisplay = document.getElementById('location-name-display');
+            const locationDropdown = document.getElementById('location-dropdown');
+            const locationOptionsContainer = document.getElementById('location-options');
+            const searchInput = document.getElementById('station-search');
+            const searchResultsContainer = document.getElementById('search-results');
+            const presetLocationsSection = document.getElementById('preset-locations-section');
+            const searchResultsSection = document.getElementById('search-results-section');
+            const noResultsMessage = document.getElementById('no-results');
             const globalCountdownEl = document.getElementById('global-refresh-countdown');
-            const globalLastUpdatedEl = document.querySelector('#global-last-updated span');
-
+            const globalLastUpdatedEl = document.getElementById('time');
+            
+            // --- FUNCTIONS ---
+            /**
+             * Renders the station placeholder cards into the main container.
+             * @param {string[]} stationIds - Array of station short names.
+             */
+            function renderStationCards(stationIds) {
+                stationContainer.innerHTML = ''; // Clear existing cards
+                
+                // Add centering class for 1-2 tiles
+                if (stationIds.length <= 2) {
+                    stationContainer.className = 'flex justify-center gap-6';
+                } else {
+                    stationContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
+                }
+                
+                stationIds.forEach(id => {
+                    const stationHTML = `
+                        <div class="station bg-gray-50 border border-gray-200 rounded-lg p-5 flex flex-col justify-between ${stationIds.length <= 2 ? 'w-80' : ''}" id="${id}">
+                            <h2 class="text-2xl font-semibold text-center min-h-[3.5rem] flex items-center justify-center">Loading...</h2>
+                            <div class="stats grid grid-cols-3 gap-4 text-center my-6">
+                                <div class="stat">
+                                    <span class="count block text-5xl font-bold" id="classic-${id}">--</span>
+                                    <span class="label text-lg text-gray-600">Classic</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="count block text-5xl font-bold" id="ebikes-${id}">--</span>
+                                    <span class="label text-lg text-gray-600 flex items-center justify-center gap-1">
+                                        <svg class="w-5 h-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                                        Ebikes
+                                    </span>
+                                </div>
+                                <div class="stat">
+                                    <span class="count block text-5xl font-bold" id="docks-${id}">--</span>
+                                    <span class="label text-lg text-gray-600">Docks</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    stationContainer.insertAdjacentHTML('beforeend', stationHTML);
+                });
+            }
+            
+            /**
+             * Populates the preset location dropdown menu from the locations data.
+             */
+            function populateDropdown() {
+                locationOptionsContainer.innerHTML = '';
+                locations.forEach((location, index) => {
+                    const optionHTML = `
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 transition-colors" role="menuitem" tabindex="-1" data-type="preset" data-index="${index}">
+                            ${location.name}
+                        </a>`;
+                    locationOptionsContainer.insertAdjacentHTML('beforeend', optionHTML);
+                });
+            }
+            
+            /**
+             * Searches through all stations and displays results
+             * @param {string} query - The search query
+             */
+            function searchStations(query) {
+                if (!query.trim()) {
+                    // Show preset locations when search is empty
+                    presetLocationsSection.classList.remove('hidden');
+                    searchResultsSection.classList.add('hidden');
+                    noResultsMessage.classList.add('hidden');
+                    return;
+                }
+                
+                const normalizedQuery = query.toLowerCase().trim();
+                const matchingStations = allStations.filter(station => 
+                    station.name.toLowerCase().includes(normalizedQuery) ||
+                    station.short_name.toLowerCase().includes(normalizedQuery)
+                ).slice(0, 10); // Limit to 10 results for performance
+                
+                if (matchingStations.length > 0) {
+                    searchResultsContainer.innerHTML = '';
+                    matchingStations.forEach(station => {
+                        const optionHTML = `
+                            <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 transition-colors" role="menuitem" tabindex="-1" data-type="search" data-station-id="${station.short_name}" data-station-name="${station.name}">
+                                <div class="font-medium">${station.name}</div>
+                                <div class="text-xs text-gray-500">ID: ${station.short_name}</div>
+                            </a>`;
+                        searchResultsContainer.insertAdjacentHTML('beforeend', optionHTML);
+                    });
+                    
+                    presetLocationsSection.classList.add('hidden');
+                    searchResultsSection.classList.remove('hidden');
+                    noResultsMessage.classList.add('hidden');
+                } else {
+                    presetLocationsSection.classList.add('hidden');
+                    searchResultsSection.classList.add('hidden');
+                    noResultsMessage.classList.remove('hidden');
+                }
+            }
+            
+            /**
+             * Sets the current location and triggers a re-render.
+             * @param {number|null} index - The index of the preset location, or null for custom search
+             * @param {string|null} customStationId - Station ID for custom search results
+             * @param {string|null} customStationName - Station name for display
+             */
+            function setLocation(index = null, customStationId = null, customStationName = null) {
+                if (index !== null) {
+                    // Using preset location
+                    const newLocation = locations[index];
+                    currentStationIds = newLocation.stationIds;
+                    locationNameDisplay.textContent = newLocation.name;
+                } else if (customStationId && customStationName) {
+                    // Using search result
+                    currentStationIds = [customStationId];
+                    locationNameDisplay.textContent = customStationName;
+                }
+                
+                renderStationCards(currentStationIds);
+                fetchAndDisplayData();
+                startCountdown(); // Restart countdown on location change
+                
+                // Clear search and close dropdown
+                searchInput.value = '';
+                searchStations(''); // Reset to show preset locations
+                locationDropdown.classList.add('hidden');
+                locationButton.querySelector('svg').classList.remove('rotate-180');
+            }
+            
+            /**
+             * Starts or restarts the refresh countdown timer.
+             */
             function startCountdown() {
                 if (countdownInterval) clearInterval(countdownInterval);
-
                 let secondsRemaining = REFRESH_INTERVAL_SECONDS;
-
                 const updateTimer = () => {
                     if (secondsRemaining > 0) {
                         const displaySeconds = Math.ceil(secondsRemaining / 5) * 5;
@@ -315,79 +310,150 @@
                         clearInterval(countdownInterval);
                     }
                 };
-                
                 updateTimer(); 
                 countdownInterval = setInterval(updateTimer, 1000);
             }
-
-            async function fetchAndDisplayData() {
+            
+            /**
+             * Loads all stations for search functionality
+             */
+            async function loadAllStations() {
                 try {
                     const gbfsResponse = await fetch('https://gbfs.bluebikes.com/gbfs/gbfs.json');
                     if (!gbfsResponse.ok) throw new Error(`GBFS discovery file not found.`);
                     const gbfsData = await gbfsResponse.json();
                     
                     const stationInfoURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_information').url;
+                    const infoResponse = await fetch(stationInfoURL);
+                    if (!infoResponse.ok) throw new Error(`Station info not found.`);
+                    const infoData = await infoResponse.json();
+                    
+                    allStations = infoData.data.stations.filter(station => station.short_name); // Only stations with short names
+                    console.log(`Loaded ${allStations.length} stations for search`);
+                } catch (error) {
+                    console.error('Error loading stations for search:', error);
+                }
+            }
+            
+            /**
+             * Fetches station information and status, then updates the UI.
+             */
+            async function fetchAndDisplayData() {
+                try {
+                    // Fetch GBFS discovery file to get the correct URLs
+                    const gbfsResponse = await fetch('https://gbfs.bluebikes.com/gbfs/gbfs.json');
+                    if (!gbfsResponse.ok) throw new Error(`GBFS discovery file not found.`);
+                    const gbfsData = await gbfsResponse.json();
+                    
+                    const stationInfoURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_information').url;
                     const statusURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_status').url;
-
-                    if (Object.keys(stationDataCache).length === 0) {
-                        const infoResponse = await fetch(stationInfoURL);
-                        if (!infoResponse.ok) throw new Error(`Station info not found.`);
-                        const infoData = await infoResponse.json();
-                        
-                        infoData.data.stations.forEach(station => {
-                            if (stationShortNames.includes(station.short_name)) {
-                                stationDataCache[station.short_name] = {
-                                    id: station.station_id,
-                                    name: station.name
-                                };
-                            }
-                        });
-                    }
-
+                    
+                    // Fetch detailed station info (name, etc.), but only if needed
+                    const infoResponse = await fetch(stationInfoURL);
+                    if (!infoResponse.ok) throw new Error(`Station info not found.`);
+                    const infoData = await infoResponse.json();
+                    
+                    // Clear cache before populating to avoid stale data if station IDs change
+                    Object.keys(stationDataCache).forEach(key => delete stationDataCache[key]);
+                    infoData.data.stations.forEach(station => {
+                        if (currentStationIds.includes(station.short_name)) {
+                            stationDataCache[station.short_name] = { id: station.station_id, name: station.name };
+                        }
+                    });
+                    
+                    // Fetch real-time station status (bikes, docks)
                     const statusResponse = await fetch(statusURL);
                     if (!statusResponse.ok) throw new Error(`Station status not found.`);
                     const statusData = await statusResponse.json();
                     
-                    const lastUpdatedTime = new Date(statusData.last_updated * 1000).toLocaleTimeString([], { 
-                        hour: 'numeric', 
-                        minute: '2-digit' 
-                    });
-
+                    const lastUpdatedTime = new Date(statusData.last_updated * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                     globalLastUpdatedEl.textContent = lastUpdatedTime;
-
+                    
+                    // Update UI for each station
                     statusData.data.stations.forEach(station => {
+                        const stationInfo = Object.values(stationDataCache).find(s => s.id === station.station_id);
                         const shortName = Object.keys(stationDataCache).find(key => stationDataCache[key].id === station.station_id);
-                        if (shortName) {
-                            const stationName = stationDataCache[shortName].name;
+                        if (stationInfo && currentStationIds.includes(shortName)) {
                             const ebikes = station.num_ebikes_available || 0;
                             const classicBikes = (station.num_bikes_available || 0) - ebikes;
                             const docks = station.num_docks_available || 0;
-
-                            document.getElementById(shortName).querySelector('h2').textContent = stationName;
-                            document.getElementById(`classic-${shortName}`).textContent = classicBikes;
-                            document.getElementById(`ebikes-${shortName}`).textContent = ebikes;
-                            document.getElementById(`docks-${shortName}`).textContent = docks;
+                            
+                            const stationElement = document.getElementById(shortName);
+                            if (stationElement) {
+                                stationElement.querySelector('h2').textContent = stationInfo.name;
+                                stationElement.querySelector(`#classic-${shortName}`).textContent = classicBikes;
+                                stationElement.querySelector(`#ebikes-${shortName}`).textContent = ebikes;
+                                stationElement.querySelector(`#docks-${shortName}`).textContent = docks;
+                            }
                         }
                     });
-
                 } catch (error) {
                     console.error('Error fetching Bluebikes data:', error);
-                    stationShortNames.forEach(id => {
+                    currentStationIds.forEach(id => {
                         const el = document.getElementById(id);
                         if (el) el.querySelector('h2').textContent = `Could not load data`;
                     });
                 }
             }
             
-            fetchAndDisplayData();
-            startCountdown();
+            // --- INITIALIZATION & EVENT LISTENERS ---
             
+            populateDropdown();
+            loadAllStations(); // Load all stations for search functionality
+            
+            // Location button click
+            locationButton.addEventListener('click', () => {
+                locationDropdown.classList.toggle('hidden');
+                locationButton.querySelector('svg').classList.toggle('rotate-180');
+                if (!locationDropdown.classList.contains('hidden')) {
+                    searchInput.focus();
+                }
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', (e) => {
+                searchStations(e.target.value);
+            });
+            
+            // Prevent search input from closing dropdown when clicked
+            searchInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Handle clicks on dropdown options (both preset and search results)
+            locationDropdown.addEventListener('click', (e) => {
+                const target = e.target.closest('a[data-type]');
+                if (target) {
+                    e.preventDefault();
+                    
+                    if (target.getAttribute('data-type') === 'preset') {
+                        const locationIndex = parseInt(target.getAttribute('data-index'), 10);
+                        setLocation(locationIndex);
+                    } else if (target.getAttribute('data-type') === 'search') {
+                        const stationId = target.getAttribute('data-station-id');
+                        const stationName = target.getAttribute('data-station-name');
+                        setLocation(null, stationId, stationName);
+                    }
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!document.getElementById('location-menu').contains(e.target)) {
+                    locationDropdown.classList.add('hidden');
+                    locationButton.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+            
+            // Initialize with first location
+            setLocation(0);
+            
+            // Set up refresh interval
             setInterval(() => {
                 fetchAndDisplayData();
                 startCountdown();
             }, REFRESH_INTERVAL_SECONDS * 1000);
         });
     </script>
-
 </body>
 </html>
