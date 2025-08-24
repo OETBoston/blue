@@ -56,16 +56,16 @@
             <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                 <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="h-6 sm:h-8">
                 <div class="flex items-center gap-1 sm:gap-2">
-                    <p class="text-xl sm:text-3xl font-medium">@</p>
+                    <p class="text-2xl sm:text-[32px] font-medium">@</p>
                     <!-- Dropdown Menu for Locations -->
                     <div class="relative" id="location-menu">
-                        <button id="location-button" class="text-xl sm:text-3xl font-semibold text-gray-800 flex items-center gap-1 sm:gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                        <button id="location-button" class="text-2xl sm:text-[32px] font-semibold text-gray-800 flex items-center gap-1 sm:gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
                             <span id="location-name-display"></span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 transition-transform dropdown-arrow" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
                         </button>
-                                            <div style="margin-top:3px;" id="location-dropdown" class="hidden absolute z-10 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-80 sm:max-h-96 overflow-hidden" role="menu">
+                         <div style="margin-top:3px;" id="location-dropdown" class="hidden absolute z-10 mt-2 w-[90vw] max-w-xs left-1/2 -translate-x-1/2 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none max-h-80 sm:max-h-96 overflow-hidden" role="menu">
                         <!-- Search Input -->
                         <div class="p-3 border-b border-gray-200">
                             <div class="relative">
@@ -132,9 +132,13 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+                const ICONS = {
+                cityHall: `<svg class="city-hall-icon" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><path d="m51.96 83.7h22.67v36.4h-22.67z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m39.27 65.48h65.4v20.82h-65.4z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.76 64.11h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m102.77 64.09h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m13.06 23.87h117.87v20.82h-117.87z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.98 44.69h87.99v20.82h-87.99z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><g fill="#0f1f2d"><path d="m21.11 30.23h8.1v8.1h-8.1z"/><path d="m34.5 30.23h8.1v8.1h-8.1z"/><path d="m47.86 30.23h8.1v8.1h-8.1z"/><path d="m61.24 30.23h8.1v8.1h-8.1z"/><path d="m74.63 30.23h8.1v8.1h-8.1z"/><path d="m101.37 30.23h8.1v8.1h-8.1z"/><path d="m88.02 30.23h8.1v8.1h-8.1z"/><path d="m114.76 30.23h8.1v8.1h-8.1z"/><path d="m34.5 50.35h8.1v8.1h-8.1z"/><path d="m47.86 50.35h8.1v8.1h-8.1z"/><path d="m61.24 50.35h8.1v8.1h-8.1z"/><path d="m74.63 50.35h8.1v8.1h-8.1z"/><path d="m88.02 50.35h8.1v8.1h-8.1z"/><path d="m101.37 50.35h8.1v8.1h-8.1z"/><path d="m61.24 71.84h8.1v8.1h-8.1z"/><path d="m74.63 71.84h8.1v8.1h-8.1z"/><path d="m74.58 71.84h8.1v8.1h-8.1z"/><path d="m87.96 71.84h8.1v8.1h-8.1z"/><path d="m47.91 71.84h8.1v8.1h-8.1z"/></g><path d="m41.53 106.58h46.46v13.52h-46.46z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/></svg>`
+            };
+
             // --- DATA & STATE ---
             const locations = [
-                { name: "Boston City Hall", stationIds: ['B32008', 'D32009', 'B32032'] },
+                { name: "Boston City Hall", stationIds: ['B32008', 'D32009', 'B32032'], icon: 'cityHall' },
                 { name: "1010 Massachusetts Ave.", stationIds: ['C32022'] },
                 { name: "BPS/Bolling Building", stationIds: ['B32017'] },
                 { name: "Cambridge City Hall", stationIds: ['M32012', 'M32011'] },
@@ -218,9 +222,15 @@
             function populateDropdown() {
                 locationOptionsContainer.innerHTML = '';
                 locations.forEach((location, index) => {
+                    // Check for an icon and inject it with proper styling
+                    const iconHTML = location.icon && ICONS[location.icon]
+                        ? ICONS[location.icon].replace('class="city-hall-icon"', 'class="city-hall-icon h-5 w-5 mr-2"')
+                        : '';
+
                     const optionHTML = `
-                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 transition-colors" role="menuitem" tabindex="-1" data-type="preset" data-index="${index}">
-                            ${location.name}
+                        <a href="#" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 transition-colors flex items-center" role="menuitem" tabindex="-1" data-type="preset" data-index="${index}">
+                            ${iconHTML}
+                            <span>${location.name}</span>
                         </a>`;
                     locationOptionsContainer.insertAdjacentHTML('beforeend', optionHTML);
                 });
@@ -273,15 +283,34 @@
              * @param {string|null} customStationName - Station name for display
              */
             function setLocation(index = null, customStationId = null, customStationName = null) {
+                let displayName = '';
+                let hasIcon = false;
+                let iconHTML = '';
+
                 if (index !== null) {
                     // Using preset location
                     const newLocation = locations[index];
                     currentStationIds = newLocation.stationIds;
-                    locationNameDisplay.textContent = newLocation.name;
+                    displayName = newLocation.name;
+                    // Check if there is an icon to display
+                    if (newLocation.icon && ICONS[newLocation.icon]) {
+                        hasIcon = true;
+                        // Make the title icon larger and responsive
+                        iconHTML = ICONS[newLocation.icon].replace('class="city-hall-icon"', 'class="city-hall-icon h-8 w-8 sm:h-9 sm:w-9 mr-2 sm:mr-3"');
+                    }
                 } else if (customStationId && customStationName) {
                     // Using search result
                     currentStationIds = [customStationId];
-                    locationNameDisplay.textContent = customStationName;
+                    displayName = customStationName;
+                }
+
+                // Update the display with or without the icon
+                if (hasIcon) {
+                    locationNameDisplay.innerHTML = `${iconHTML}<span>${displayName}</span>`;
+                    locationNameDisplay.classList.add('flex', 'items-center');
+                } else {
+                    locationNameDisplay.textContent = displayName;
+                    locationNameDisplay.classList.remove('flex', 'items-center');
                 }
                 
                 renderStationCards(currentStationIds);
@@ -405,7 +434,7 @@
             // Location button click
             locationButton.addEventListener('click', () => {
                 locationDropdown.classList.toggle('hidden');
-                locationButton.querySelector('svg').classList.toggle('rotate-180');
+                locationButton.querySelector('.dropdown-arrow').classList.toggle('rotate-180');
                 if (!locationDropdown.classList.contains('hidden')) {
                     searchInput.focus();
                 }
@@ -442,7 +471,7 @@
             document.addEventListener('click', (e) => {
                 if (!document.getElementById('location-menu').contains(e.target)) {
                     locationDropdown.classList.add('hidden');
-                    locationButton.querySelector('svg').classList.remove('rotate-180');
+                    locationButton.querySelector('.dropdown-arrow').classList.remove('rotate-180');
                 }
             });
             
