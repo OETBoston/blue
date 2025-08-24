@@ -10,7 +10,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display-swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -47,6 +47,17 @@
         .dropdown-scroll::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        /* Icon styling */
+        .dropdown-icon {
+            width: 1.25rem; /* 20px */
+            height: 1.25rem; /* 20px */
+            margin-right: 0.5rem; /* 8px */
+        }
+        .title-icon {
+            width: 2.25rem; /* 36px */
+            height: 2.25rem; /* 36px */
+            margin-right: 0.75rem; /* 12px */
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center min-h-screen p-4">
@@ -54,7 +65,7 @@
         <!-- Header Section -->
         <header class="text-center pb-6 mb-6 border-b border-gray-200">
             <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
-                <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="h-6 sm:h-8">
+                <img src="bb-logo.svg" alt="Bluebikes Logo" class="h-6 sm:h-8">
                 <div class="flex items-center gap-1 sm:gap-2">
                     <p class="text-2xl sm:text-[32px] font-medium">@</p>
                     <!-- Dropdown Menu for Locations -->
@@ -132,27 +143,42 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-                const ICONS = {
-                cityHall: `<svg class="city-hall-icon" viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><path d="m51.96 83.7h22.67v36.4h-22.67z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m39.27 65.48h65.4v20.82h-65.4z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.76 64.11h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m102.77 64.09h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m13.06 23.87h117.87v20.82h-117.87z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.98 44.69h87.99v20.82h-87.99z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><g fill="#0f1f2d"><path d="m21.11 30.23h8.1v8.1h-8.1z"/><path d="m34.5 30.23h8.1v8.1h-8.1z"/><path d="m47.86 30.23h8.1v8.1h-8.1z"/><path d="m61.24 30.23h8.1v8.1h-8.1z"/><path d="m74.63 30.23h8.1v8.1h-8.1z"/><path d="m101.37 30.23h8.1v8.1h-8.1z"/><path d="m88.02 30.23h8.1v8.1h-8.1z"/><path d="m114.76 30.23h8.1v8.1h-8.1z"/><path d="m34.5 50.35h8.1v8.1h-8.1z"/><path d="m47.86 50.35h8.1v8.1h-8.1z"/><path d="m61.24 50.35h8.1v8.1h-8.1z"/><path d="m74.63 50.35h8.1v8.1h-8.1z"/><path d="m88.02 50.35h8.1v8.1h-8.1z"/><path d="m101.37 50.35h8.1v8.1h-8.1z"/><path d="m61.24 71.84h8.1v8.1h-8.1z"/><path d="m74.63 71.84h8.1v8.1h-8.1z"/><path d="m74.58 71.84h8.1v8.1h-8.1z"/><path d="m87.96 71.84h8.1v8.1h-8.1z"/><path d="m47.91 71.84h8.1v8.1h-8.1z"/></g><path d="m41.53 106.58h46.46v13.52h-46.46z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/></svg>`
+            const ICONS = {
+                cityHall: `<svg viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><path d="m51.96 83.7h22.67v36.4h-22.67z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m39.27 65.48h65.4v20.82h-65.4z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.76 64.11h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m102.77 64.09h13.76v56.01h-13.76z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m13.06 23.87h117.87v20.82h-117.87z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><path d="m27.98 44.69h87.99v20.82h-87.99z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/><g fill="#0f1f2d"><path d="m21.11 30.23h8.1v8.1h-8.1z"/><path d="m34.5 30.23h8.1v8.1h-8.1z"/><path d="m47.86 30.23h8.1v8.1h-8.1z"/><path d="m61.24 30.23h8.1v8.1h-8.1z"/><path d="m74.63 30.23h8.1v8.1h-8.1z"/><path d="m101.37 30.23h8.1v8.1h-8.1z"/><path d="m88.02 30.23h8.1v8.1h-8.1z"/><path d="m114.76 30.23h8.1v8.1h-8.1z"/><path d="m34.5 50.35h8.1v8.1h-8.1z"/><path d="m47.86 50.35h8.1v8.1h-8.1z"/><path d="m61.24 50.35h8.1v8.1h-8.1z"/><path d="m74.63 50.35h8.1v8.1h-8.1z"/><path d="m88.02 50.35h8.1v8.1h-8.1z"/><path d="m101.37 50.35h8.1v8.1h-8.1z"/><path d="m61.24 71.84h8.1v8.1h-8.1z"/><path d="m74.63 71.84h8.1v8.1h-8.1z"/><path d="m74.58 71.84h8.1v8.1h-8.1z"/><path d="m87.96 71.84h8.1v8.1h-8.1z"/><path d="m47.91 71.84h8.1v8.1h-8.1z"/></g><path d="m41.53 106.58h46.46v13.52h-46.46z" fill="#fff" stroke="#0f1f2d" stroke-miterlimit="10" stroke-width="3"/></svg>`,
+                building: '<img src="building.svg" alt="Building Icon">',
+                community: '<img src="community.svg" alt="Community Icon">',
+                library: '<img src="library.svg" alt="Library Icon">',
+                police: '<img src="police.svg" alt="Police Icon">',
+                pw: '<img src="pw.svg" alt="Public Works Icon">',
+                water: '<img src="water.svg" alt="Water Dept Icon">',
+                fire: '<img src="fire.svg" alt="Fire Dept Icon">',
+                stadium: '<img src="stadium.svg" alt="Stadium Icon">',
+                medical: '<img src="medical.svg" alt="Medical Icon">',
+                art: '<img src="art.svg" alt="Art Icon">'
             };
-
+            
             // --- DATA & STATE ---
             const locations = [
                 { name: "Boston City Hall", stationIds: ['B32008', 'D32009', 'B32032'], icon: 'cityHall' },
-                { name: "1010 Massachusetts Ave.", stationIds: ['C32022'] },
-                { name: "BPS/Bolling Building", stationIds: ['B32017'] },
-                { name: "Cambridge City Hall", stationIds: ['M32012', 'M32011'] },
-                { name: "BCYF/Tobin Community Center", stationIds: ['B32063', 'C32001'] },
-                { name: "Boston Public Library Central", stationIds: ['B32005', 'D32055', 'D32045', 'D32046', 'D32047']},
-                { name: "BPD Headquarters", stationIds: ['B32002', 'B32064', 'B32059']},
-                { name: "Frontage Road", stationIds: ['C32061','C32035']},
-                { name: "12 Channel St", stationIds: ['C32021','C32020', 'C32011']},
-                { name: "Boston Water and Sewer", stationIds: ['C32005', 'C32068', 'C32072', 'B32026'] },
-                { name: "BFD Headquarters", stationIds: ['C32068', 'C32022'] },
-                { name: "Brookline Town Hall", stationIds:['K32003','K32005']},
-                { name: "Somerville City Hall", stationIds:['S32001','S32048', 'S32046']},
-                { name: "Chelsea City Hall", stationIds:['H32002','H320010']},
-                { name: "Fenway Park", stationIds: ['B32058', 'B32020', 'B32034'] }
+                { name: "1010 Massachusetts Ave.", stationIds: ['C32022'], icon: 'building' },
+                { name: "BPS/Bolling Building", stationIds: ['B32017'], icon: 'building' },
+                { name: "Cambridge City Hall", stationIds: ['M32012', 'M32011'], icon: 'building' },
+                { name: "BCYF/Tobin Community Center", stationIds: ['B32063', 'C32001'], icon: 'community' },
+                { name: "Boston Public Library Central", stationIds: ['B32005', 'D32055', 'D32045', 'D32046', 'D32047'], icon: 'library'},
+                { name: "BPD Headquarters", stationIds: ['B32002', 'B32064', 'B32059'], icon: 'police'},
+                { name: "Frontage Road", stationIds: ['C32061','C32035'], icon: 'pw'},
+                { name: "12 Channel St", stationIds: ['C32021','C32020', 'C32011'], icon: 'building'},
+                { name: "Boston Water and Sewer", stationIds: ['C32005', 'C32068', 'C32072', 'B32026'], icon: 'water' },
+                { name: "Oak Square", stationIds: ['D32076', 'D32031', 'D32077'], icon: 'community'},
+                { name: "Maverick Square", stationIds: ['A32030', 'A32031'], icon: 'community'},
+                { name: "Brighton Medical Center", stationIds: ['D32028', 'D32054'], icon: 'medical'},
+                { name: "BFD Headquarters", stationIds: ['C32068', 'C32022'], icon: 'fire' },
+                { name: "Brookline Town Hall", stationIds:['K32003','K32005'], icon: 'building'},
+                { name: "Somerville City Hall", stationIds:['S32001','S32048', 'S32046'], icon: 'building'},
+                { name: "Chelsea City Hall", stationIds:['H32002','H320010'], icon: 'building'},
+                { name: "Fenway Park", stationIds: ['B32058', 'B32020', 'B32034'], icon: 'stadium' },
+                { name: "MGH", stationIds: ['D32016', 'D32050', 'D32000'], icon: 'medical'},
+                { name: "Museum of Fine Arts", stationIds: ['B32021', 'B32033', 'Z32997'], icon: 'art'}
             ];
             
             let currentStationIds = [];
@@ -185,7 +211,7 @@
                 
                 // Add centering class for 1-2 tiles
                 if (stationIds.length <= 2) {
-                    stationContainer.className = 'flex justify-center gap-6';
+                    stationContainer.className = 'flex justify-center flex-wrap gap-6';
                 } else {
                     stationContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6';
                 }
@@ -222,9 +248,8 @@
             function populateDropdown() {
                 locationOptionsContainer.innerHTML = '';
                 locations.forEach((location, index) => {
-                    // Check for an icon and inject it with proper styling
                     const iconHTML = location.icon && ICONS[location.icon]
-                        ? ICONS[location.icon].replace('class="city-hall-icon"', 'class="city-hall-icon h-5 w-5 mr-2"')
+                        ? ICONS[location.icon].replace('<svg', '<svg class="dropdown-icon"').replace('<img', '<img class="dropdown-icon"')
                         : '';
 
                     const optionHTML = `
@@ -242,7 +267,6 @@
              */
             function searchStations(query) {
                 if (!query.trim()) {
-                    // Show preset locations when search is empty
                     presetLocationsSection.classList.remove('hidden');
                     searchResultsSection.classList.add('hidden');
                     noResultsMessage.classList.add('hidden');
@@ -253,7 +277,7 @@
                 const matchingStations = allStations.filter(station => 
                     station.name.toLowerCase().includes(normalizedQuery) ||
                     station.short_name.toLowerCase().includes(normalizedQuery)
-                ).slice(0, 10); // Limit to 10 results for performance
+                ).slice(0, 10);
                 
                 if (matchingStations.length > 0) {
                     searchResultsContainer.innerHTML = '';
@@ -284,42 +308,34 @@
              */
             function setLocation(index = null, customStationId = null, customStationName = null) {
                 let displayName = '';
-                let hasIcon = false;
                 let iconHTML = '';
 
                 if (index !== null) {
-                    // Using preset location
                     const newLocation = locations[index];
                     currentStationIds = newLocation.stationIds;
                     displayName = newLocation.name;
-                    // Check if there is an icon to display
                     if (newLocation.icon && ICONS[newLocation.icon]) {
-                        hasIcon = true;
-                        // Make the title icon larger and responsive
-                        iconHTML = ICONS[newLocation.icon].replace('class="city-hall-icon"', 'class="city-hall-icon h-8 w-8 sm:h-9 sm:w-9 mr-2 sm:mr-3"');
+                        iconHTML = ICONS[newLocation.icon].replace('<svg', '<svg class="title-icon"').replace('<img', '<img class="title-icon"');
                     }
                 } else if (customStationId && customStationName) {
-                    // Using search result
                     currentStationIds = [customStationId];
                     displayName = customStationName;
                 }
 
-                // Update the display with or without the icon
-                if (hasIcon) {
+                if (iconHTML) {
                     locationNameDisplay.innerHTML = `${iconHTML}<span>${displayName}</span>`;
                     locationNameDisplay.classList.add('flex', 'items-center');
                 } else {
-                    locationNameDisplay.textContent = displayName;
+                    locationNameDisplay.innerHTML = `<span>${displayName}</span>`;
                     locationNameDisplay.classList.remove('flex', 'items-center');
                 }
                 
                 renderStationCards(currentStationIds);
                 fetchAndDisplayData();
-                startCountdown(); // Restart countdown on location change
+                startCountdown();
                 
-                // Clear search and close dropdown
                 searchInput.value = '';
-                searchStations(''); // Reset to show preset locations
+                searchStations('');
                 locationDropdown.classList.add('hidden');
                 locationButton.querySelector('svg').classList.remove('rotate-180');
             }
@@ -358,8 +374,7 @@
                     if (!infoResponse.ok) throw new Error(`Station info not found.`);
                     const infoData = await infoResponse.json();
                     
-                    allStations = infoData.data.stations.filter(station => station.short_name); // Only stations with short names
-                    console.log(`Loaded ${allStations.length} stations for search`);
+                    allStations = infoData.data.stations.filter(station => station.short_name);
                 } catch (error) {
                     console.error('Error loading stations for search:', error);
                 }
@@ -370,7 +385,6 @@
              */
             async function fetchAndDisplayData() {
                 try {
-                    // Fetch GBFS discovery file to get the correct URLs
                     const gbfsResponse = await fetch('https://gbfs.bluebikes.com/gbfs/gbfs.json');
                     if (!gbfsResponse.ok) throw new Error(`GBFS discovery file not found.`);
                     const gbfsData = await gbfsResponse.json();
@@ -378,12 +392,10 @@
                     const stationInfoURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_information').url;
                     const statusURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_status').url;
                     
-                    // Fetch detailed station info (name, etc.), but only if needed
                     const infoResponse = await fetch(stationInfoURL);
                     if (!infoResponse.ok) throw new Error(`Station info not found.`);
                     const infoData = await infoResponse.json();
                     
-                    // Clear cache before populating to avoid stale data if station IDs change
                     Object.keys(stationDataCache).forEach(key => delete stationDataCache[key]);
                     infoData.data.stations.forEach(station => {
                         if (currentStationIds.includes(station.short_name)) {
@@ -391,7 +403,6 @@
                         }
                     });
                     
-                    // Fetch real-time station status (bikes, docks)
                     const statusResponse = await fetch(statusURL);
                     if (!statusResponse.ok) throw new Error(`Station status not found.`);
                     const statusData = await statusResponse.json();
@@ -399,7 +410,6 @@
                     const lastUpdatedTime = new Date(statusData.last_updated * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
                     globalLastUpdatedEl.textContent = lastUpdatedTime;
                     
-                    // Update UI for each station
                     statusData.data.stations.forEach(station => {
                         const stationInfo = Object.values(stationDataCache).find(s => s.id === station.station_id);
                         const shortName = Object.keys(stationDataCache).find(key => stationDataCache[key].id === station.station_id);
@@ -427,11 +437,9 @@
             }
             
             // --- INITIALIZATION & EVENT LISTENERS ---
-            
             populateDropdown();
-            loadAllStations(); // Load all stations for search functionality
+            loadAllStations();
             
-            // Location button click
             locationButton.addEventListener('click', () => {
                 locationDropdown.classList.toggle('hidden');
                 locationButton.querySelector('.dropdown-arrow').classList.toggle('rotate-180');
@@ -440,34 +448,21 @@
                 }
             });
             
-            // Search input
-            searchInput.addEventListener('input', (e) => {
-                searchStations(e.target.value);
-            });
+            searchInput.addEventListener('input', (e) => searchStations(e.target.value));
+            searchInput.addEventListener('click', (e) => e.stopPropagation());
             
-            // Prevent search input from closing dropdown when clicked
-            searchInput.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
-            
-            // Handle clicks on dropdown options (both preset and search results)
             locationDropdown.addEventListener('click', (e) => {
                 const target = e.target.closest('a[data-type]');
                 if (target) {
                     e.preventDefault();
-                    
                     if (target.getAttribute('data-type') === 'preset') {
-                        const locationIndex = parseInt(target.getAttribute('data-index'), 10);
-                        setLocation(locationIndex);
+                        setLocation(parseInt(target.getAttribute('data-index'), 10));
                     } else if (target.getAttribute('data-type') === 'search') {
-                        const stationId = target.getAttribute('data-station-id');
-                        const stationName = target.getAttribute('data-station-name');
-                        setLocation(null, stationId, stationName);
+                        setLocation(null, target.getAttribute('data-station-id'), target.getAttribute('data-station-name'));
                     }
                 }
             });
             
-            // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!document.getElementById('location-menu').contains(e.target)) {
                     locationDropdown.classList.add('hidden');
@@ -475,10 +470,8 @@
                 }
             });
             
-            // Initialize with first location
             setLocation(0);
             
-            // Set up refresh interval
             setInterval(() => {
                 fetchAndDisplayData();
                 startCountdown();
