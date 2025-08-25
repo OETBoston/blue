@@ -64,6 +64,18 @@
         #station-search {
             font-size: 16px !important;
         }
+
+        @media (max-width: 768px) {
+            #location-button {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            #at {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center min-h-screen p-4">
@@ -73,7 +85,7 @@
             <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
                 <img src="bb-logo.svg" alt="Bluebikes Logo" class="h-6 sm:h-8">
                 <div class="flex items-center gap-1 sm:gap-2">
-                    <p class="text-2xl sm:text-[32px] font-medium">@</p>
+                    <p id="at" class="text-2xl sm:text-[32px] font-medium">@</p>
                     <!-- Dropdown Menu for Locations -->
                     <div class="relative" id="location-menu">
                         <button id="location-button" class="text-2xl sm:text-[32px] font-semibold text-gray-800 flex items-center gap-1 sm:gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
