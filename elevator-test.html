@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluebikes & MBTA Near City Hall</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,400..700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Inter, -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            color: #162F77;
+            /* CHANGE: Remove default margin to help elements fit */
+            margin: 0;
+        }
+        .main-container {
+            width: 100%;
+            padding: 12px;
+            position: relative;
+            background: #b8d8e8;
+            height: 180px;
+            /* CHANGE: Ensure padding doesn't add to the height */
+            box-sizing: border-box;
+        }
+        .panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+        .panel.active {
+            opacity: 1;
+        }
+        .header {
+            flex-shrink: 0;
+            padding-bottom: 8px;
+        }
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            height: 32px;
+        }
+        .main-content {
+            display: flex;
+            justify-content: space-around;
+            /* CHANGE: Stretch card items to fill vertical space */
+            align-items: stretch;
+            gap: 8px;
+            flex-grow: 1;
+        }
+        .card {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+            /* CHANGE: Removed fixed height to allow stretching */
+        }
+        .card-title {
+            font-weight: 600;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* CHANGE: Matched font size to MBTA titles for consistency */
+            font-size: 18px;
+        }
+        .line-header {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .line-dot {
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .line-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .stat {
+            padding: 0 4px;
+        }
+        .stat-count {
+            display: block;
+            font-weight: 600;
+            font-size: 36px;
+        }
+        .stat-label {
+            color: #6b7280;
+            font-size: 12px;
+        }
+        .ebike-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+        .lightning-icon {
+            width: 12px;
+            height: 12px;
+            color: #facc15;
+        }
+        .time-display {
+            display: block;
+            font-weight: bold;
+            font-size: 26px;
+        }
+        .mbta-header-title {
+            font-weight: 600;
+            font-size: 20px;
+            padding-left: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        
+        <!-- BLUEBIKES PANEL -->
+        <div id="bluebikes-panel" class="panel active">
+            <header style="padding-left: 20px;" class="header">
+                <img src="https://cdn.lyft.com/static/bikesharefe/logo/Bluebikes-main.svg" alt="Bluebikes Logo" class="logo">
+            </header>
+            
+            <main id="station-container" class="main-content">
+                <!-- Station cards will be injected here -->
+            </main>
+        </div>
+
+        <!-- MBTA PANEL -->
+        <div id="mbta-panel" class="panel">
+            <header class="header">
+                <div style="padding-left: 20px;" class="header-row">
+                    <!--<h2 class="mbta-header-title">MBTA Near City Hall</h2>-->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/MBTA.svg" alt="MBTA Logo" class="logo">
+                </div>
+            </header>
+            
+            <main class="main-content">
+                <!-- Blue Line -->
+                <div class="card">
+                    <div class="line-header">
+                        <span class="line-dot" style="background-color: #3b82f6;"></span>
+                        <h2 class="line-title">Blue Line (Govt Ctr → Wonderland)</h2>
+                    </div>
+                    <div style="text-align: center;">
+                        <span id="blue-line-times" class="time-display">--</span>
+                    </div>
+                </div>
+                
+                <!-- Red Line -->
+                <div class="card">
+                    <div class="line-header">
+                        <span class="line-dot" style="background-color: #ef4444;"></span>
+                        <h2 class="line-title">Red Line (Park St → Ashmont)</h2>
+                    </div>
+                    <div style="text-align: center;">
+                        <span id="red-line-times" class="time-display">--</span>
+                    </div>
+                </div>
+                
+                <!-- Orange Line -->
+                <div class="card">
+                    <div class="line-header">
+                        <span class="line-dot" style="background-color: #f97316;"></span>
+                        <h2 class="line-title">Orange Line (State St → Forest Hills)</h2>
+                    </div>
+                    <div style="text-align: center;">
+                        <span id="orange-line-times" class="time-display">--</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const SWITCH_INTERVAL_SECONDS = 10;
+        const DATA_REFRESH_SECONDS = 20;
+        const MBTA_API_KEY = 'ec5c0e06114d498ab788b12888f05df2';
+        const CITY_HALL_STATION_IDS = ['B32008', 'D32009', 'B32032'];
+        
+        // --- STATE ---
+        let currentPanel = 'bluebikes';
+        const stationDataCache = {};
+        
+        // --- DOM ELEMENTS ---
+        const stationContainer = document.getElementById('station-container');
+        const bluebikesPanel = document.getElementById('bluebikes-panel');
+        const mbtaPanel = document.getElementById('mbta-panel');
+        
+        // --- BLUEBIKES FUNCTIONS ---
+        function renderStationCards(stationIds) {
+            stationContainer.innerHTML = '';
+            
+            stationIds.forEach(id => {
+                const stationHTML = `
+                    <div class="card" id="${id}">
+                        <h2 class="card-title">Loading...</h2>
+                        <div class="stats-container">
+                            <div class="stat">
+                                <span class="stat-count" id="classic-${id}">--</span>
+                                <span class="stat-label">Classic</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-count" id="ebikes-${id}">--</span>
+                                <span class="ebike-label">
+                                    <svg class="lightning-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" /></svg>
+                                    Ebikes
+                                </span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-count" id="docks-${id}">--</span>
+                                <span class="stat-label">Docks</span>
+                            </div>
+                        </div>
+                    </div>`;
+                stationContainer.insertAdjacentHTML('beforeend', stationHTML);
+            });
+        }
+        
+        async function fetchBluebikesData() {
+            try {
+                const gbfsResponse = await fetch('https://gbfs.bluebikes.com/gbfs/gbfs.json');
+                if (!gbfsResponse.ok) throw new Error(`GBFS discovery file not found.`);
+                const gbfsData = await gbfsResponse.json();
+                
+                const stationInfoURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_information').url;
+                const statusURL = gbfsData.data.en.feeds.find(feed => feed.name === 'station_status').url;
+                
+                const infoResponse = await fetch(stationInfoURL);
+                if (!infoResponse.ok) throw new Error(`Station info not found.`);
+                const infoData = await infoResponse.json();
+                
+                Object.keys(stationDataCache).forEach(key => delete stationDataCache[key]);
+                infoData.data.stations.forEach(station => {
+                    if (CITY_HALL_STATION_IDS.includes(station.short_name)) {
+                        stationDataCache[station.short_name] = { id: station.station_id, name: station.name };
+                    }
+                });
+                
+                const statusResponse = await fetch(statusURL);
+                if (!statusResponse.ok) throw new Error(`Station status not found.`);
+                const statusData = await statusResponse.json();
+                
+                statusData.data.stations.forEach(station => {
+                    const stationInfo = Object.values(stationDataCache).find(s => s.id === station.station_id);
+                    const shortName = Object.keys(stationDataCache).find(key => stationDataCache[key].id === station.station_id);
+                    if (stationInfo && CITY_HALL_STATION_IDS.includes(shortName)) {
+                        const ebikes = station.num_ebikes_available || 0;
+                        const classicBikes = (station.num_bikes_available || 0) - ebikes;
+                        const docks = station.num_docks_available || 0;
+                        
+                        const stationElement = document.getElementById(shortName);
+                        if (stationElement) {
+                            stationElement.querySelector('h2').textContent = stationInfo.name;
+                            stationElement.querySelector(`#classic-${shortName}`).textContent = classicBikes;
+                            stationElement.querySelector(`#ebikes-${shortName}`).textContent = ebikes;
+                            stationElement.querySelector(`#docks-${shortName}`).textContent = docks;
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching Bluebikes data:', error);
+                CITY_HALL_STATION_IDS.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.querySelector('h2').textContent = `Could not load data`;
+                });
+            }
+        }
+        
+        // --- MBTA FUNCTIONS ---
+        function formatPredictionTime(prediction) {
+            const attributes = prediction.attributes;
+            if (attributes.status) {
+                return attributes.status.length > 15 ? 'Delayed' : attributes.status;
+            }
+            const effectiveTime = attributes.arrival_time || attributes.departure_time;
+            if (!effectiveTime) return null;
+            const now = new Date();
+            const arrival = new Date(effectiveTime);
+            const seconds = Math.round((arrival - now) / 1000);
+            if (seconds < 0) return null;
+            if (seconds <= 30) return 'ARR';
+            const minutes = Math.round(seconds / 60);
+            return `${minutes} min`;
+        }
+        
+        async function getPredictions(route, stop, direction) {
+            const url = `https://api-v3.mbta.com/predictions?filter[route]=${route}&filter[stop]=${stop}&filter[direction_id]=${direction}&sort=departure_time&page[limit]=3`;
+            try {
+                const response = await fetch(url, {
+                    headers: { 'x-api-key': MBTA_API_KEY }
+                });
+                if (!response.ok) throw new Error(`API call failed: ${response.status}`);
+                const data = await response.json();
+                return data.data || [];
+            } catch (error) {
+                console.error(`Error fetching MBTA data for ${route} at ${stop}:`, error);
+                return [];
+            }
+        }
+        
+        async function fetchMBTAData() {
+            const lines = [
+                { id: 'blue-line', route: 'Blue', stop: 'place-gover', direction: 0 },
+                { id: 'red-line', route: 'Red', stop: 'place-pktrm', direction: 1 },
+                { id: 'orange-line', route: 'Orange', stop: 'place-state', direction: 1 }
+            ];
+
+            await Promise.all(lines.map(async (line) => {
+                const predictions = await getPredictions(line.route, line.stop, line.direction);
+                const timeEl = document.getElementById(`${line.id}-times`);
+
+                if (predictions && predictions.length > 0) {
+                    const formattedTimes = predictions
+                        .filter(p => {
+                            if (!p.attributes.departure_time) return false;
+                            const effectiveTime = new Date(p.attributes.arrival_time || p.attributes.departure_time);
+                            if (isNaN(effectiveTime.getTime())) return false;
+                            return (effectiveTime - new Date()) / 1000 >= 0;
+                        })
+                        .map(p => formatPredictionTime(p))
+                        .filter(time => time !== null)
+                        .slice(0, 3)
+                        .join(', ');
+
+                    timeEl.textContent = formattedTimes || 'N/A';
+                } else {
+                    timeEl.textContent = 'N/A';
+                }
+            }));
+        }
+        
+        // --- PANEL SWITCHING ---
+        function switchPanel() {
+            if (currentPanel === 'bluebikes') {
+                bluebikesPanel.classList.remove('active');
+                mbtaPanel.classList.add('active');
+                currentPanel = 'mbta';
+            } else {
+                mbtaPanel.classList.remove('active');
+                bluebikesPanel.classList.add('active');
+                currentPanel = 'bluebikes';
+            }
+        }
+        
+        // --- DATA REFRESH ---
+        async function refreshAllData() {
+            await Promise.all([
+                fetchBluebikesData(),
+                fetchMBTAData()
+            ]);
+        }
+        
+        // --- INITIALIZATION ---
+        renderStationCards(CITY_HALL_STATION_IDS);
+        refreshAllData();
+        
+        // Switch panels every 10 seconds
+        setInterval(switchPanel, SWITCH_INTERVAL_SECONDS * 1000);
+        
+        // Refresh data every 20 seconds
+        setInterval(refreshAllData, DATA_REFRESH_SECONDS * 1000);
+    </script>
+</body>
+</html>
